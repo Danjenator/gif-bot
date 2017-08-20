@@ -51,13 +51,17 @@ provider:
 
 custom:
   webpackIncludeModules: true
+  serverless-offline:
+    babelOptions:
+      presets: ["es2015", "stage-2"]
 
 # you can add packaging information here
 package:
   individually: true
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
+  include:
+    - webpack.config.js
+    - handler.js
+    - node_modules/**
 #  exclude:
 #    - exclude-me.js
 #    - exclude-me-dir/**

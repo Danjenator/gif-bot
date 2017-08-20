@@ -1,6 +1,10 @@
 'use strict';
 
+const giphy = require("giphy-api");
+const twit = require("twitter");
+
 module.exports.gifBot = (event, context, callback) => {
+
   const response = {
     statusCode: 200,
     body: JSON.stringify({
@@ -13,4 +17,6 @@ module.exports.gifBot = (event, context, callback) => {
 
   // Use this code if you don't use the http event with the LAMBDA-PROXY integration
   // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+
+  console.log("success!");
 };
