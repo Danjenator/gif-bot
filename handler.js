@@ -1,16 +1,10 @@
 'use strict';
 
-module.exports.starter = (event, context, callback) => {
-
-  console.log("event", event);
-  console.log("context", context);
-  console.log("callback", callback);
-
-
+module.exports.gifBot = (event, context, callback) => {
   const response = {
     statusCode: 200,
     body: JSON.stringify({
-      message: "Lambda and webpack playing nicely with the serverless framework",
+      message: 'Go Serverless v1.0! Your function executed successfully!',
       input: event,
     }),
   };
