@@ -14,7 +14,6 @@ function createReply(status){
      giphy.search(subject).then( (res) => {
 
          var user = status.user.screen_name;
-
          var reply = {
            in_reply_to_status_id: status.id_str
          };
