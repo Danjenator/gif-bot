@@ -1,6 +1,6 @@
 {
   "name": "gif-bot",
-  "version": "0.2.0",
+  "version": "0.5.0",
   "description": "A Twitter bot that will tweet a gif with the tag tweeted to it.",
   "main": "handler.js",
   "author": "Daniel J. Brown <danjenator@gmail.com>",
