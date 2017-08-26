@@ -1,22 +1,30 @@
 'use strict';
 
-const giphy = require("giphy-api");
-const twit = require("twitter");
+const giphy = require("giphy-api")();
+const Twit = require("twit");
+const T = new Twit(require("./twit.config.js"))
 
 module.exports.gifBot = (event, context, callback) => {
 
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
-    }),
-  };
+   callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
 
-  callback(null, response);
+   T.get("statuses/mentions_timeline", {count:200, }, (err, data, response)=> {
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
+    //  console.log("err", err);
+      console.log("data", data);
+    //  console.log("response", response);
 
-  console.log("success!");
+      
+
+
+         // Search with options using promise
+    // giphy.search('Robot! ').then( (res) => {
+    //      console.log("res", res);
+    // });
+
+
+   });
+
+
+   console.log("success!");
 };

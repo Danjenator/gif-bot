@@ -6,3 +6,6 @@ jspm_packages
 .serverless
 .webpack
 .DS_Store
+
+#config files
+twit.config.js
