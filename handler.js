@@ -8,13 +8,15 @@ function createReply(status){
 
   return new Promise((resolve, reject)=> {
 
+    var subject = status.text.replace("@The_Gif_Bot","");
+    console.log("subject: ", subject);
     // Search with options using promise
-     giphy.search(status.text.replace("@The_Gif_Bot","")).then( (res) => {
+     giphy.search(subject).then( (res) => {
 
          var user = status.user.screen_name;
 
          var reply = {
-           in_reply_to_status_id: status.id
+           in_reply_to_status_id: status.id_str
          };
 
          //var theGif = res.data[Math.floor(Math.random() * res.data.length)].embed_url;
