@@ -1,15 +1,16 @@
 {
   "name": "gif-bot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Twitter bot that will tweet a gif with the tag tweeted to it.",
   "main": "handler.js",
-  "author": "Daniel J. Brown <danjenator@gmail.com",
+  "author": "Daniel J. Brown <danjenator@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/Danjenator/gif-bot"
   },
   "keywords": [
     "lamba",
+    "aws",
     "webpack",
     "serverless",
     "babel",
