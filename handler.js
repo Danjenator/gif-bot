@@ -2,7 +2,41 @@
 
 const giphy = require("giphy-api")();
 const Twit = require("twit");
-const T = new Twit(require("./twit.config.js"))
+const T = new Twit(require("./twit.config.js"));
+var AWS = require("aws-sdk");
+AWS.config.update({region: "us-west-2"});
+const dynamodb = new AWS.DynamoDB({apiVersion: "2012-08-10"});
+//count Twitter MaxCount
+const MAX_COUNT = 200;
+
+//getLastTwitterIndex = ()=>{
+//     var params = {
+//     "Key": {
+//       "id": {
+//         "b": twitterHandle
+//       }
+//     },
+//     "TableName": "TwitterSeeds",
+//     "ConsistentRead": true,
+//     "ProjectionExpression": "nextCursor"
+//     };
+// };
+
+// saveTwitterIndex = ()=>{
+//     var params = {
+//       RequestItems: {
+//         "Gif_Bot": [
+//           PutRequest: {
+//             Item: {
+//               "previous_index": {
+//                 S:
+//               }
+//             }
+//           }
+//         ]
+//       }
+//     }
+// }
 
 function createReply(status){
 
@@ -45,25 +79,31 @@ module.exports.gifBot = (event, context, callback) => {
 
    callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
 
+
+
+
    T.get("statuses/mentions_timeline", {count:200}, (err, data, res)=> {
       if(err){
         console.log("err: ", err);
         //TODO add error handling to deliver sad panda gif
       } else {
-        for (let mention of data) {
-          createReply(mention).then((res, rej)=>{
-            console.log("res: ", res);
-            if(rej) {
-              console.log("rej: ", rej);
-            } else {
-              T.post("statuses/update", res, (err, data, res) => {
-                console.log("err", err);
-                console.log("data", data);
-                console.log("res", res);
-              });
-            }
-          });
-        }
+
+        console.log("Data: ", data);//
+
+        // for (let mention of data) {
+        //   createReply(mention).then((res, rej)=>{
+        //     console.log("res: ", res);
+        //     if(rej) {
+        //       console.log("rej: ", rej);
+        //     } else {
+        //       // T.post("statuses/update", res, (err, data, res) => {
+        //       //   console.log("err", err);
+        //       //   console.log("data", data);
+        //       //   console.log("res", res);
+        //       // });
+        //     }
+        //   });
+        //}
       }
    });
    console.log("success!");

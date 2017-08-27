@@ -1,6 +1,6 @@
 {
   "name": "gif-bot",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "A Twitter bot that will tweet a gif with the tag tweeted to it.",
   "main": "handler.js",
   "author": "Daniel J. Brown <danjenator@gmail.com>",
@@ -38,6 +38,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "aws": "0.0.3-2",
     "babel-runtime": "^6.22.0",
     "giphy-api": "^1.2.7",
     "twit": "^2.2.9"
