@@ -3,11 +3,11 @@
 const giphy = require("giphy-api")();
 const Twit = require("twit");
 const T = new Twit(require("./twit.config.js"));
-var AWS = require("aws-sdk");
-AWS.config.update({region: "us-west-2"});
-const dynamodb = new AWS.DynamoDB({apiVersion: "2012-08-10"});
+//var AWS = require("aws-sdk");
+//AWS.config.update({region: "us-west-2"});
+//const dynamodb = new AWS.DynamoDB({apiVersion: "2012-08-10"});
 //count Twitter MaxCount
-const MAX_COUNT = 200;
+//const MAX_COUNT = 200;
 
 //getLastTwitterIndex = ()=>{
 //     var params = {
@@ -90,20 +90,24 @@ module.exports.gifBot = (event, context, callback) => {
 
         console.log("Data: ", data);//
 
-        // for (let mention of data) {
-        //   createReply(mention).then((res, rej)=>{
-        //     console.log("res: ", res);
-        //     if(rej) {
-        //       console.log("rej: ", rej);
-        //     } else {
-        //       // T.post("statuses/update", res, (err, data, res) => {
-        //       //   console.log("err", err);
-        //       //   console.log("data", data);
-        //       //   console.log("res", res);
-        //       // });
-        //     }
-        //   });
-        //}
+        for (let mention of data) {
+          createReply(mention).then((res, rej)=>{
+            console.log("res: ", res);
+            if(rej) {
+              console.log("rej: ", rej);
+            } else {
+              T.post("statuses/update", res, (err, data, res) => {
+                if(err) {
+                  console.log("err", err);
+                  //TODO add error handling to deliver sad panda gif
+                }
+                console.log("data", data);
+                console.log("res", res);
+
+              });
+            }
+          });
+        }
       }
    });
    console.log("success!");
