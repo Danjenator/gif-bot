@@ -1,6 +1,6 @@
 {
   "name": "gif-bot",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A Twitter bot that will tweet a gif with the tag tweeted to it.",
   "main": "handler.js",
   "author": "Daniel J. Brown <danjenator@gmail.com>",
@@ -20,7 +20,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "start": "serverless offline start --location .webpack"
+    "start": "serverless invoke local --function gifBot",
+    "deploy": "serverless deploy"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

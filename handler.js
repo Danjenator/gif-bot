@@ -42,7 +42,7 @@ function createReply(status){
 
   return new Promise((resolve, reject)=> {
 
-    var subject = status.text.replace("@The_Gif_Bot","");
+    var subject = status.text.replace("@The_Gif_Bot","").trim();
     console.log("subject: ", subject);
     // Search with options using promise
      giphy.search(subject).then( (res) => {
@@ -58,7 +58,7 @@ function createReply(status){
 
           console.log("theGif", theGif);
           if(theGif) {
-            reply.status = "Sure @" + user + "! Here's your gif! " + theGif;
+            reply.status = "Sure @" + user + "! Here's your gif about " + subject + "! " + theGif;
             console.log("reply", reply);
             resolve(reply);
           } else {
