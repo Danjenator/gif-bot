@@ -10,18 +10,75 @@ const dynamodb = new AWS.DynamoDB({apiVersion: "2012-08-10"});
 const MAX_COUNT = 200;
 const LAST_ID_K = "Last ID";
 
-//getLastTwitterIndex = ()=>{
-//     var params = {
-//     "Key": {
-//       "id": {
-//         "b": twitterHandle
-//       }
-//     },
-//     "TableName": "TwitterSeeds",
-//     "ConsistentRead": true,
-//     "ProjectionExpression": "nextCursor"
-//     };
+function getLastTwitterIndex(){
+  return new Promise((resolve, reject) => {
+   var params = {
+    Key: {
+     "KEY": {
+       S: LAST_ID_K
+      }, 
+     "KEY_BINARY": {
+       B: LAST_ID_K
+      }
+    }, 
+    TableName: "GifBot"
+   };
+
+   getFromDynamoDB(params).
+   then((res) => {
+      //console.log("res for get from: ", res);
+      resolve(res.Item.last_id.S);
+   });
+ });
+};
+
+// function writeTweetsToDynamoDB(tweets) {
+
+//   console.log("fire");
+
+//   var time = new Date();
+
+//   var params = {
+//    ExpressionAttributeNames: {
+//     "#T": "tweets"
+//    }, 
+//    ExpressionAttributeValues: {
+//     ":t": {
+//       L: tweets
+//      }
+//    }, 
+//    Key: {
+//     "KEY": {
+//       S: "" + time
+//      }, 
+//     "KEY_BINARY": {
+//       B: "" + time
+//      }
+//    }, 
+//    ReturnValues: "ALL_NEW", 
+//    TableName: "GifBot", 
+//    UpdateExpression: "SET #T = :t"
+//   };
+
+//     postToDynamoDB(params).
+//   then( (res) => {
+//     console.log("res for all", res);
+//   });
 // };
+
+function getFromDynamoDB(params){
+  return new Promise((resolve, reject) => {
+    dynamodb.getItem(params, (err, data) => {
+      if (err){ 
+        console.log("These params were rejected: ", params);
+        console.log("err: ", err);
+        reject(err);
+      } else {
+        resolve(data);
+      }                
+    });
+  });
+};
 
 function saveTwitterId(lastId){
 
@@ -100,36 +157,51 @@ module.exports.gifBot = (event, context, callback) => {
 
    callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
 
-   T.get("statuses/mentions_timeline", {since_id: 901522912653574144, count: MAX_COUNT}, (err0, data0, res0)=> {
+   getLastTwitterIndex().then((lastTwitId) =>{
+
+    console.log("lastTwitId: ", lastTwitId);
+ 
+   
+
+   T.get("statuses/mentions_timeline", {since_id: lastTwitId, count: MAX_COUNT}, (err0, data0, res0)=> {
       if(err0){
         console.log("err0: ", err0);
         //TODO add error handling to deliver sad panda gif
       } else {
 
-        console.log("Data0: ", data0);
-        console.log("res0", res0);
+         console.log("Data0: ", data0);
+         //console.log("res0", res0);
 
-        //saveTwitterId(data0[data0.length - 1].id_str);
+         //console.log("data0[0].id_str, ", data0[0].id_str);
 
-        // for (let mention of data0) {
-        //   createReply(mention).then((res1, rej)=>{
-        //     //console.log("res1: ", res1);
-        //     if(rej) {
-        //       //console.log("rej: ", rej);
-        //     } else {
-        //       T.post("statuses/update", res1, (err1, data1, res2) => {
-        //         if(err1) {
-        //           //console.log("err1", err1);
-        //           //TODO add error handling to deliver sad panda gif
-        //         }
-        //         //console.log("data1", data1);
-        //         //console.log("res2", res2);
+         if(lastTwitId != data0[0].id_str) {
 
-        //       });
-        //     }
-        //   });
-        // }
-      }
+          //writeTweetsToDynamoDB(data0);
+
+          saveTwitterId(data0[0].id_str);
+
+          for (let mention of data0) {
+            createReply(mention).then((res1, rej)=>{
+              //console.log("res1: ", res1);
+              if(rej) {
+                console.log("rej: ", rej);
+              } else {
+                T.post("statuses/update", res1, (err1, data1, res2) => {
+                  if(err1) {
+                    console.log("err1", err1);
+                    //TODO add error handling to deliver sad panda gif
+                  }
+                  console.log("data1", data1);
+                  //console.log("res2", res2);
+
+                });
+              }
+            });
+          }
+      
+       }
+     }
    });
    console.log("success!");
+ });
 };
