@@ -162,17 +162,36 @@ function createReply(status) {
 
 function cleanTweet(tweet) {
 
-  var subject = tweet.replace(/[@]\w{1,15}/g, '');
+  console.log(" tweet: ", tweet);
 
-  console.log("subject: ", subject);
+  tweet = tweet.replace(/[@]\w{1,15}/g, '');
 
+  console.log("clean tweet: ", tweet);
+
+  let words = subject.split(" ");
+  let lastWords = [];
+  let subject;
+
+  if(words.length > 2) {
+    for(let i = 0; i < 2; i++){
+      lastWords.push(words[Math.floor(Math.random() * (words.lenth - 1))])
+    }
+  } else {
+    lastWords = words;
+  }
+
+  if(lastWords.lenth > 1) {
+    return lastWords[0] + " " lastWords[1];
+  else {
+    return lastWords[0];
+  }
 
 }
 
 module.exports.gifBot = (event, context, callback) => {
 
 
-  cleanTweet("subject @Danjenator @zachbiri");
+  console.log(cleanTweet("subject @Danjenator @zachbiri"));
 
   // getLastTwitterIndex().then((lastTwitId) => {
   //
