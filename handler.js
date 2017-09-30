@@ -130,7 +130,7 @@ function postToDynamoDB(params) {
 
 function createReply(status) {
   return new Promise((resolve, reject) => {
-    var subject = status.text.replace("/(\s+|^)@\S+/", "").trim();
+    var subject = status.text.replace("@The_Gif_Bot", "").trim();
 
 
 

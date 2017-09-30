@@ -25,7 +25,7 @@ provider:
   runtime: nodejs6.10
 
 # you can overwrite defaults here
-  stage: dev
+  stage: prod
   region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
@@ -75,7 +75,7 @@ functions:
             key1: value1
             key2: value2
             stageParams:
-              stage: dev
+              stage: prod
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
