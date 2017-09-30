@@ -172,7 +172,7 @@ module.exports.gifBot = (event, context, callback) => {
         //TODO add error handling to deliver sad panda gif
       } else {
 
-        if (lastTwitId != data0[0].id_str) {
+        if (data0.length > 0 && lastTwitId != data0[0].id_str) {
 
           //TODO writeTweetsToDynamoDB(data0);
 
