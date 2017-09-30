@@ -130,7 +130,10 @@ function postToDynamoDB(params) {
 
 function createReply(status) {
   return new Promise((resolve, reject) => {
-    var subject = status.text.replace("@The_Gif_Bot", "").trim();
+    var subject = status.text.replace("/(\s+|^)@\S+/", "").trim();
+
+
+
     // Search with options using promise
     giphy.search(subject).then((res) => {
       var user = status.user.screen_name;
