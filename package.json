@@ -1,6 +1,6 @@
 {
   "name": "gif-bot",
-  "version": "0.9.0",
+  "version": "0.1.1",
   "description": "A Twitter bot that will tweet a gif with the tag tweeted to it.",
   "main": "handler.js",
   "author": "Daniel J. Brown <danjenator@gmail.com>",
@@ -11,36 +11,25 @@
   "keywords": [
     "lamba",
     "aws",
-    "webpack",
     "serverless",
-    "babel",
     "twitter",
     "bot",
     "gif"
   ],
+  "bugs": {
+    "url": "https://github.com/Danjenator/gif-bot/issues"
+  },
   "license": "MIT",
   "scripts": {
     "start": "serverless invoke local --function gifBot",
     "deploy": "serverless deploy"
   },
   "devDependencies": {
-    "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-latest": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.26.0",
     "serverless": "^1.17.0",
-    "serverless-offline": "^3.15.1",
-    "serverless-runtime-babel": "0.0.6",
-    "serverless-webpack": "^2.2.0",
-    "webpack": "^3.3.0",
-    "webpack-node-externals": "^1.6.0"
+    "serverless-offline": "^3.15.1"
   },
   "dependencies": {
     "aws-sdk": "^2.108.0",
-    "babel-runtime": "^6.22.0",
     "giphy-api": "^1.2.7",
     "twit": "^2.2.9"
   }
