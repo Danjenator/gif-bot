@@ -160,49 +160,61 @@ function createReply(status) {
   });
 };
 
+function cleanTweet(tweet) {
+
+  var subject = tweet.replace(/[@]\w{1,15}/g, '');
+
+  console.log("subject: ", subject);
+
+
+}
+
 module.exports.gifBot = (event, context, callback) => {
 
-  getLastTwitterIndex().then((lastTwitId) => {
 
-    console.log("lastTwitId: ", lastTwitId);
+  cleanTweet("subject @Danjenator @zachbiri");
 
-    T.get("statuses/mentions_timeline", {
-      since_id: lastTwitId,
-      count: MAX_COUNT
-    }, (err0, data0, res0) => {
-      if (err0) {
-        console.log("err0: ", err0);
-        //TODO add error handling to deliver sad panda gif
-      } else {
-
-        if (data0.length > 0 && lastTwitId != data0[0].id_str) {
-
-          //TODO writeTweetsToDynamoDB(data0);
-
-          saveTwitterId(data0[0].id_str);
-
-          for (let mention of data0) {
-            createReply(mention).then((res1, rej) => {
-              //console.log("res1: ", res1);
-              if (rej) {
-                console.log("rej: ", rej);
-              } else {
-                T.post("statuses/update", res1, (err1, data1, res2) => {
-                  if (err1) {
-                    console.log("err1", err1);
-                    //TODO add error handling to deliver sad panda gif
-                  }
-                  console.log("data1", data1);
-                  //console.log("res2", res2);
-
-                });
-              }
-            });
-          }
-
-        }
-      }
-    });
-    console.log("success!");
-  });
+  // getLastTwitterIndex().then((lastTwitId) => {
+  //
+  //   console.log("lastTwitId: ", lastTwitId);
+  //
+  //   T.get("statuses/mentions_timeline", {
+  //     since_id: lastTwitId,
+  //     count: MAX_COUNT
+  //   }, (err0, data0, res0) => {
+  //     if (err0) {
+  //       console.log("err0: ", err0);
+  //       //TODO add error handling to deliver sad panda gif
+  //     } else {
+  //
+  //       if (data0.length > 0 && lastTwitId != data0[0].id_str) {
+  //
+  //         //TODO writeTweetsToDynamoDB(data0);
+  //
+  //         saveTwitterId(data0[0].id_str);
+  //
+  //         for (let mention of data0) {
+  //           createReply(mention).then((res1, rej) => {
+  //             //console.log("res1: ", res1);
+  //             if (rej) {
+  //               console.log("rej: ", rej);
+  //             } else {
+  //               T.post("statuses/update", res1, (err1, data1, res2) => {
+  //                 if (err1) {
+  //                   console.log("err1", err1);
+  //                   //TODO add error handling to deliver sad panda gif
+  //                 }
+  //                 console.log("data1", data1);
+  //                 //console.log("res2", res2);
+  //
+  //               });
+  //             }
+  //           });
+  //         }
+  //
+  //       }
+  //     }
+  //   });
+  //   console.log("success!");
+  // });
 };
