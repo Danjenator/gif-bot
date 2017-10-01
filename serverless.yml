@@ -71,11 +71,6 @@ functions:
       - schedule:
           rate: rate(5 minutes)
           enabled: true
-          input:
-            key1: value1
-            key2: value2
-            stageParams:
-              stage: dev
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
