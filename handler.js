@@ -130,7 +130,8 @@ function postToDynamoDB(params) {
 
 function createReply(status) {
   return new Promise((resolve, reject) => {
-    var subject = status.text.replace("@The_Gif_Bot", "").trim();
+    var subject = cleanTweet(status.text);
+    console.log("gif subject: ", subject);
     // Search with options using promise
     giphy.search(subject).then((res) => {
       var user = status.user.screen_name;
@@ -156,6 +157,20 @@ function createReply(status) {
     });
   });
 };
+
+function cleanTweet(tweet) {
+
+  tweet = tweet.replace(/[@]\w{1,15}/g, '');
+  tweet = tweet.trim();
+  let words = tweet.split(" ", 2);
+  let subject = "";
+
+  words.forEach((word)=>{
+    subject = subject + " " + word;
+  });
+
+  return subject;
+}
 
 module.exports.gifBot = (event, context, callback) => {
 
