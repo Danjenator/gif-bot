@@ -131,7 +131,7 @@ function postToDynamoDB(params) {
 function createReply(status) {
   return new Promise((resolve, reject) => {
     var subject = cleanTweet(status.text);
-
+    console.log("gif subject: ", subject);
     // Search with options using promise
     giphy.search(subject).then((res) => {
       var user = status.user.screen_name;
@@ -173,9 +173,6 @@ function cleanTweet(tweet) {
 }
 
 module.exports.gifBot = (event, context, callback) => {
-
-
-  console.log(cleanTweet("subject"));
 
   getLastTwitterIndex().then((lastTwitId) => {
 
